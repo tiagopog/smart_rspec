@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = SmartRspec::VERSION
   spec.authors       = ['Tiago Guedes']
   spec.email         = ['tiagopog@gmail.com']
-  spec.summary       = %q{Collection of macros and matchers to make your RSpec tests even more amazing.}
-  spec.description   = %q{Extends the collection of macros and matchers available for testing models with RSpec in Rails-based apps.}
+  spec.summary       = %q{Macros and matchers to make your RSpec tests even more amazing.}
+  spec.description   = %q{Collection of useful macros and matchers for RSpec tests of models/controllers in Rails-based apps.}
   spec.homepage      = 'https://github.com/tiagopog/smart_rspec'
   spec.license       = 'MIT'
 
@@ -18,7 +18,8 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
+  spec.add_development_dependency 'activesupport', '~> 4.1'
   spec.add_development_dependency 'bundler', '~> 1.7'
-  spec.add_development_dependency 'rspec', '~> 3.2.0'
   spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rspec', '~> 3.2'
 end

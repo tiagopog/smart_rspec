@@ -1,4 +1,6 @@
-require 'smart_rspec/version'
+require 'active_support/concern'
+require 'smart_rspec/macros'
+require 'smart_rspec/support/expectations'
 
 module SmartRspec
   extend ActiveSupport::Concern
