@@ -58,7 +58,14 @@ module SmartRspec
 
       def validates_uniqueness_of(attr, validation)
         it 'is already in use' do
-          assert_validation(attr, subject.send(attr), subject.dup)
+          if validation.is_a?(Hash)
+            mock, scope = validation[:mock] || subject.dup, validation[:scope]
+            !scope.nil? && mock.send("#{scope}=", subject.send(scope))
+          else
+            mock = subject.dup
+          end
+
+          assert_validation(attr, subject.send(attr), mock)
         end
       end
 
