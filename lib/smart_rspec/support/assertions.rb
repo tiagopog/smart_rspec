@@ -57,13 +57,12 @@ module SmartRspec
       end
 
       def validates_uniqueness_of(attr, validation)
-        it 'is already in use' do
-          if validation.is_a?(Hash)
-            mock, scope = validation[:mock] || subject.dup, validation[:scope]
-            !scope.nil? && mock.send("#{scope}=", subject.send(scope))
-          else
-            mock = subject.dup
-          end
+        scoped = scoped_validation?(validation)
+        scope = scoped ? validation[:scope] : nil
+
+        it "is already in use#{" (scope: #{scope})" if scoped}" do
+          mock = (validation[:mock] rescue nil) || subject.dup
+          scoped && mock.send("#{scope}=", subject.send(scope))
 
           assert_validation(attr, subject.send(attr), mock)
         end
@@ -115,6 +114,10 @@ module SmartRspec
             (", default: #{options[:default]}" if options[:default].present?)
           ]
         end
+      end
+
+      def scoped_validation?(validation)
+        validation.is_a?(Hash) && (%i(scope mock) - validation.keys).empty?
       end
     end
   end
