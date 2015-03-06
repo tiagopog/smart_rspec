@@ -18,7 +18,7 @@ RSpec::Matchers.define :be_url do
     /?
   )}ix
   match { |actual| actual =~ url_regex }
-nd
+end
 
 RSpec::Matchers.define :be_image do |field|
 end
@@ -34,5 +34,4 @@ end
 
 RSpec::Matchers.define :include_items do
 end
-
 
