@@ -1,4 +1,5 @@
 require 'smart_rspec/support/assertions'
+require 'smart_rspec/matchers'
 
 module SmartRspec::Macros
   include SmartRspec::Support::Assertions
