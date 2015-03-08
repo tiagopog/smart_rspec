@@ -11,7 +11,7 @@ module SmartRspec
         mock.send("#{attr}=", value)
 
         expect(mock).not_to be_valid
-        expect(mock.errors.keys).to include(attr)
+        expect(mock).to have_error_on(attr)
       end
     end
   end
