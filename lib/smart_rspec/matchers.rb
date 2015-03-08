@@ -19,17 +19,19 @@ RSpec::Matchers.define :be_image do |*types|
   match { |actual| actual =~ build_regex(:image, types) }
 end
 
-RSpec::Matchers.define :be_increasing do
-end
-
-RSpec::Matchers.define :be_decreasing do
-end
-
 RSpec::Matchers.define :have_error_on do |attr|
   match { |actual| actual.errors.keys.include?(attr) }
 end
 
 RSpec::Matchers.define :include_items do |*items|
   match { |actual| (items.flatten - [actual].flatten).empty? }
+end
+
+RSpec::Matchers.define :be_ascending do
+  match { |actual| actual == actual.sort  }
+end
+
+RSpec::Matchers.define :be_descending do
+  match { |actual| actual.each_cons(2).all? { |i, j| i >= j  } }
 end
 
