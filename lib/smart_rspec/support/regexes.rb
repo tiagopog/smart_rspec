@@ -27,14 +27,14 @@ module SmartRspec
 
       def build_uri_regex
         {
-          uri: %r{\b(
+          uri: %r{^(
                 (((ht|f)tp[s]?://)|([a-z0-9]+\.))+
                 (?<!@)
                 ([a-z0-9\_\-]+)
                 (\.[a-z]+)+
                 ([\?/\:][a-z0-9_=%&@\?\./\-\:\#\(\)]+)?
                 /?
-              )}ix,
+              )$}ix,
           protocol: /((ht|f)tp[s]?)/i
         }
       end

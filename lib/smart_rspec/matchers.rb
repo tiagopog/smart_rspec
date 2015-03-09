@@ -16,7 +16,7 @@ RSpec::Matchers.define :be_url do
   match { |actual| actual =~ build_regex(:uri) }
 end
 
-RSpec::Matchers.define :be_image do |*types|
+RSpec::Matchers.define :be_image_url do |*types|
   match { |actual| actual =~ build_regex(:image, types) }
 end
 
