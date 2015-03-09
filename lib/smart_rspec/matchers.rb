@@ -1,4 +1,5 @@
 require 'rspec/matchers'
+require 'rspec/collection_matchers'
 require 'smart_rspec/support/regexes'
 
 include SmartRspec::Support::Regexes
