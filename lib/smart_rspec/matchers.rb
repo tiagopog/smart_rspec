@@ -1,38 +1,45 @@
 require 'rspec/matchers'
+require 'rspec/expectations'
 require 'rspec/collection_matchers'
 require 'smart_rspec/support/regexes'
 
 include SmartRspec::Support::Regexes
 
-RSpec::Matchers.define :be_boolean do
-  match { |actual| [true, false].include?(actual) }
-end
+module SmartRspec
+  module Matchers
+    extend RSpec::Matchers::DSL
 
-RSpec::Matchers.define :be_email do
-  match { |actual| actual =~ build_regex(:email) }
-end
+    matcher :be_boolean do
+      match { |actual| [true, false].include?(actual) }
+    end
 
-RSpec::Matchers.define :be_url do
-  match { |actual| actual =~ build_regex(:uri) }
-end
+    matcher :be_email do
+      match { |actual| actual =~ build_regex(:email) }
+    end
 
-RSpec::Matchers.define :be_image_url do |*types|
-  match { |actual| actual =~ build_regex(:image, types) }
-end
+    matcher :be_url do
+      match { |actual| actual =~ build_regex(:uri) }
+    end
 
-RSpec::Matchers.define :have_error_on do |attr|
-  match { |actual| actual.errors.keys.include?(attr) }
-end
+    matcher :be_image_url do |*types|
+      match { |actual| actual =~ build_regex(:image, types) }
+    end
 
-RSpec::Matchers.define :include_items do |*items|
-  match { |actual| (items.flatten - [actual].flatten).empty? }
-end
+    matcher :have_error_on do |attr|
+      match { |actual| actual.errors.keys.include?(attr) }
+    end
 
-RSpec::Matchers.define :be_ascending do
-  match { |actual| actual == actual.sort  }
-end
+    matcher :include_items do |*items|
+      match { |actual| (items.flatten - [actual].flatten).empty? }
+    end
 
-RSpec::Matchers.define :be_descending do
-  match { |actual| actual.each_cons(2).all? { |i, j| i >= j  } }
+    matcher :be_ascending do
+      match { |actual| actual == actual.sort  }
+    end
+
+    matcher :be_descending do
+      match { |actual| actual.each_cons(2).all? { |i, j| i >= j  } }
+    end
+  end
 end
 

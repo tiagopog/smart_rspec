@@ -83,6 +83,30 @@ describe 'SmartRspec Matchers' do
     end
   end
 
+  describe '#have' do
+    context 'when valid' do
+      it { expect([1]).to have(1).item }
+      it { expect(%w(foo bar)).to have(2).items }
+    end
+
+    context 'when invalid' do
+      it { expect([1]).not_to have(2).items }
+      it { expect(%w(foo bar)).not_to have(1).item }
+    end
+  end
+
+  describe '#have_at_least' do
+    context 'when valid' do
+      it { expect(%w(foo bar foobar)).to have_at_least(3).items }
+    end
+  end
+
+  describe '#have_at_most' do
+    context 'when valid' do
+      it { expect(%w(foo bar foobar)).to have_at_most(3).items }
+    end
+  end
+
   describe '#have_error_on' do
     subject(:mock) { User.new(email: '') }
 
