@@ -36,6 +36,7 @@ describe 'SmartRspec Matchers' do
 
   describe '#be_email' do
     context 'when valid' do
+      it { expect(Faker::Internet.email).to be_email }
       it { expect('tiagopog@gmail.com').to be_email }
       it { expect('foo@bar.com.br').to be_email }
     end
@@ -51,6 +52,7 @@ describe 'SmartRspec Matchers' do
 
   describe '#be_url' do
     context 'when valid' do
+      it { expect(Faker::Internet.url).to be_url }
       it { expect('http://adtangerine.com').to be_url }
       it { expect('http://www.facebook.com').to be_url }
       it { expect('www.twitflink.com').to be_url }
@@ -66,6 +68,7 @@ describe 'SmartRspec Matchers' do
 
   describe '#be_image_url' do
     context 'when valid' do
+      it { expect(Faker::Company.logo).to be_image_url }
       it { expect('http://foobar.com/foo.jpg').to be_image_url }
       it { expect('http://foobar.com/foo.jpg').to be_image_url(:jpg) }
       it { expect('http://foobar.com/foo.gif').to be_image_url(:gif) }
@@ -119,7 +122,7 @@ describe 'SmartRspec Matchers' do
 
     context 'when invalid' do
       it do
-        mock.email = 'tiagopog@gmail.com'
+        mock.email = Faker::Internet.email
         mock.valid?
 
         expect(mock).not_to have_error_on(:email)

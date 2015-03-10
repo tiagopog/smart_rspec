@@ -76,8 +76,8 @@ module SmartRspec
         attrs.each do |attr|
           it %Q(has an attribute named "#{attr}"#{type_str}) do
             expect(subject).to respond_to(attr)
-            expect(subject.send(attr)).to eq(default) if default.present?
-            assert_attr_type(attr, type, options) if type.present?
+            default && expect(subject.send(attr)).to(eq(default))
+            type && assert_attr_type(attr, type, options)
           end
         end
       end
@@ -107,11 +107,11 @@ module SmartRspec
       end
 
       def build_type_str(options)
-        if !options.nil? && options[:type].present?
+        if !options.nil? && options[:type]
           " (%s%s%s)" % [
-            ('Enumerated ' if options[:enum].present?),
+            ('Enumerated ' if options[:enum]),
             options[:type],
-            (", default: #{options[:default]}" if options[:default].present?)
+            (", default: #{options[:default]}" if options[:default])
           ]
         end
       end
