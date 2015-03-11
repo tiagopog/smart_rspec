@@ -41,11 +41,11 @@ module SmartRspec
       end
 
       def validates_length_of(attr, validation)
-        validation.keys.each do |key|
+        validation.each do |key, value|
           next unless %i(in is maximum minimum within).include?(key)
-          txt, value = build_length_validation(key, validation[key])
+          txt, n = build_length_validation(key, value)
           it txt do
-            assert_validation(attr, 'x' * value)
+            assert_validation(attr, 'x' * n)
           end
         end
       end
@@ -69,14 +69,14 @@ module SmartRspec
       end
 
       def assert_has_attributes(attrs, options)
-        type_str = build_type_str(options) 
-        type = options[:type] rescue nil
-        default = options[:default] rescue nil
+        type_str = build_type_str(options)
+        default, enum, type = options.values_at(:default, :enum, :type)
 
         attrs.each do |attr|
           it %Q(has an attribute named "#{attr}"#{type_str}) do
             expect(subject).to respond_to(attr)
-            default && expect(subject.send(attr)).to(eq(default))
+            default && (expect(subject.send(attr)).to eq(default))
+            enum && (expect(enum).to include(subject.send(attr).to_sym))
             type && assert_attr_type(attr, type, options)
           end
         end
