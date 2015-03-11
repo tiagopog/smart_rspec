@@ -1,5 +1,9 @@
+require 'smart_rspec/support/regexes'
+
 module Factories
   class User
+    include SmartRspec::Support::Regexes
+
     attr_accessor :email, :system, :system_id, :project, :project_id,
                   :name, :username, :is_admin, :score, :admin, :father,
                   :mother, :articles, :rates
@@ -29,7 +33,9 @@ module Factories
     end
 
     def valid?
-      (email.nil? || email.empty?) && (@errors = { email: "can't be blank" })
+      (!name.nil? && name.length > 80) && (@errors.merge!({ name: "can't be greater than 80 chars" }))
+      (email.nil? || email.empty?) && (@errors.merge!({ email: "can't be blank" }))
+      (!email.nil? && !(email =~ build_regex(:email))) && (@errors.merge!({ email: 'invalid format for email' })) && return false)
     end
   end
 end
