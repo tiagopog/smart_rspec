@@ -33,10 +33,20 @@ module Factories
     end
 
     def valid?
-      (!name.nil? && name.length > 80) && (@errors.merge!({ name: "can't be greater than 80 chars" }))
-      (email.nil? || email.empty?) && (@errors.merge!({ email: "can't be blank" }))
-      (!email.nil? && !(email =~ build_regex(:email))) && (@errors.merge!({ email: 'invalid format for email' })) && return false)
+      if !email || (email && email !~ build_regex(:email))
+        @errors.merge!({ email: @@error_message[:blank] })
+      elsif !name || (name && name.length > 80)
+        @errors.merge!({ name: @@error_message[(name ? :too_big : :blank)] })
+      end
+      @errors.nil?
     end
+
+    private
+
+    @@error_message = {
+      blank: "can't be blank",
+      too_big: "can't be greater than 80 chars"
+    }
   end
 end
 
