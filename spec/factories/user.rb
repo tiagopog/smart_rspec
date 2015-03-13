@@ -8,6 +8,9 @@ module Factories
     @@collection = []
     @@error_message = {
       blank: "can't be blank",
+      exclusion: "can't use a reserved value",
+      format: "doesn't match the required pattern",
+      inclusion: 'value not included',
       too_big: "can't be greater than 80 chars",
       uniqueness: 'must be unique within the given scope'
     }
@@ -33,15 +36,11 @@ module Factories
     end
 
     def locale=(locale)
-      if %i(en pt).include?(locale)
-        @locale = locale
-      else
-        raise ArgumentError, 'Argument is invalid'
-      end
+      %i(en pt).include?(locale) && @locale = locale
     end
 
     def valid?
-      %w(email name).each { |e| send("check_#{e}") }
+      %w(email father locale name username).each { |e| send("check_#{e}") }
       @errors.nil?
     end
 
@@ -53,6 +52,18 @@ module Factories
       end
     end
 
+    def check_father
+      if father && father !~ /foo/ 
+        @errors.merge!({ father: @@error_message[:format] })
+      end
+    end
+
+    def check_locale
+      unless %i(en pt).include?(locale)
+        @errors.merge!({ locale: @@error_message[:inclusion] })
+      end
+    end
+
     def check_name
       if !name || (name && name.length > 80)
         @errors.merge!({ name: @@error_message[(name ? :too_big : :blank)] })
@@ -61,8 +72,8 @@ module Factories
 
     def check_username
       other_user = @@collection.select { |e| e.name == name && e.username == username && e.id != id }.first
-      if username && other_user
-        @errors.merge!({ username: @@error_message[:uniqueness] })
+      if username && (other_user || %w(foo bar).include?(username))
+        @errors.merge!({ username: @@error_message[other_user ? :uniqueness : :exclusion] })
       end
     end
 

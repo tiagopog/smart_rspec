@@ -18,16 +18,16 @@ module SmartRspec
       end
 
       def validates_format_of(attr, validation)
-        it 'does not match the required pattern' do
-          value = validation[:sample]
+        it 'does not match the required format' do
+          mock, with =
+            validation.values_at(:mock).first,
+            validation.values_at(:with).first
 
-          if validation.has_key?(:with) && (value.nil? || validation[:with] =~ value)
-            begin
-              value = SecureRandom.hex
-            end while validation[:with] =~ value
+          if mock && with && with !~ mock
+            assert_validation(attr, mock)
+          else
+            raise ArgumentError, ':with and :mock are required when using the :format validation'
           end
-
-          assert_validation(attr, value)
         end
       end
 
