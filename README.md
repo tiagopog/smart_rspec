@@ -48,7 +48,7 @@ end
 
 ### Macros
 
- To start using SmartRspec's macros in your spec file, you will just need to define a valid `subject`.
+You will just need to define a valid `subject` to start using SmartRspec's macros in your spec file.
 
 #### has_attributes
 
@@ -117,7 +117,7 @@ fails_validation_of :foo, format: { with: /foo/, mock: 'bar' }
 
 ### Matchers
 
-SmartRspec gathers a collection of custom useful matchers.
+SmartRspec gathers a collection of custom useful matchers:
 
 #### be_ascending
 
