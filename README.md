@@ -1,6 +1,8 @@
 # SmartRspec
 
 [![Build Status](https://travis-ci.org/tiagopog/smart_rspec.svg)](https://travis-ci.org/tiagopog/smart_rspec)
+[![Dependency Status](https://gemnasium.com/tiagopog/smart_rspec.svg)](https://gemnasium.com/tiagopog/smart_rspec)
+[![Gem Version](https://badge.fury.io/rb/smart_rspec.svg)](http://badge.fury.io/rb/smart_rspec)
 
 It's time to make your specs even more awesome! SmartRspec adds useful macros and matchers into the RSpec's test suite, this way you can quickly define specs for your Rails app and get focused on making things turn into green.
 
@@ -206,3 +208,4 @@ it { expect(%w(foo bar foobar)).to include_items(%w(foo bar foobar)) }
 4. Commit your changes (`git commit -am 'Add some feature'`);
 5. Push to the branch (`git push origin my-new-feature`);
 6. Create new Pull Request.
+
