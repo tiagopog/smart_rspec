@@ -70,14 +70,11 @@ module SmartRspec
 
       def assert_has_attributes(attrs, options)
         type_str = build_type_str(options)
-        default, enum, type = options.values_at(:default, :enum, :type)
 
         attrs.each do |attr|
           it %Q(has an attribute named "#{attr}"#{type_str}) do
             expect(subject).to respond_to(attr)
-            default && (expect(subject.send(attr)).to eq(default))
-            enum && (expect(enum).to include(subject.send(attr).to_sym))
-            type && assert_attr_type(attr, type, options)
+            check_attr_options(attr, options)
           end
         end
       end

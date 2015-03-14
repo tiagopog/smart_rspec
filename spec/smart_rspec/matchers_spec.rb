@@ -73,7 +73,7 @@ describe 'SmartRspec Matchers' do
       it { expect('http://foobar.com/foo.jpg').to be_image_url(:jpg) }
       it { expect('http://foobar.com/foo.gif').to be_image_url(:gif) }
       it { expect('http://foobar.com/foo.png').to be_image_url(:png) }
-      it { expect('http://foobar.com/foo.png').to be_image_url(%i(jpg png)) }
+      it { expect('http://foobar.com/foo.png').to be_image_url([:jpg, :png]) }
       it { expect('http://foobar.com/foo/bar?image=foo.jpg').to be_image_url }
     end
 
@@ -82,7 +82,7 @@ describe 'SmartRspec Matchers' do
       it { expect('http://foobar.com/foo.jpg').not_to be_image_url(:gif) }
       it { expect('http://foobar.com/foo.gif').not_to be_image_url(:png) }
       it { expect('http://foobar.com/foo.png').not_to be_image_url(:jpg) }
-      it { expect('http://foobar.com/foo.gif').not_to be_image_url(%i(jpg png)) }
+      it { expect('http://foobar.com/foo.gif').not_to be_image_url([:jpg, :png]) }
     end
   end
 

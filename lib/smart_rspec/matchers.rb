@@ -1,13 +1,11 @@
 require 'rspec/matchers'
-require 'rspec/expectations'
 require 'rspec/collection_matchers'
 require 'smart_rspec/support/regexes'
-
-include SmartRspec::Support::Regexes
 
 module SmartRspec
   module Matchers
     extend RSpec::Matchers::DSL
+    include SmartRspec::Support::Regexes
 
     matcher :be_boolean do
       match { |actual| [true, false].include?(actual) }
