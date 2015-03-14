@@ -29,7 +29,7 @@ describe SmartRspec::Macros do
       has_attributes :email, :name, :username, type: :String
       has_attributes :is_admin, type: :Boolean
       has_attributes :score, type: :Integer, default: 0
-      has_attributes :locale, type: :String, enum: %i(en pt), default: 'en'
+      has_attributes :locale, type: :String, enum: [:en, :pt], default: 'en'
     end
 
     context 'when it receives multiple args' do
