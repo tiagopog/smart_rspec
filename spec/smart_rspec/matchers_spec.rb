@@ -111,7 +111,7 @@ describe 'SmartRspec Matchers' do
   end
 
   describe '#have_error_on' do
-    subject(:mock) { User.new(email: '') }
+    subject(:mock) { User.new(email: nil) }
 
     context 'when valid' do
       it do

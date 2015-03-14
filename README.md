@@ -100,10 +100,82 @@ fails_validation_of :foo, format: { with: /foo/, mock: 'bar' }
 
 ### Matchers
 
+SmartRspec gathers a collection of custom matchers that might be useful in a lot of specs you face.
+
+`be_ascending`
+``` ruby
+it { expect([1, 2, 3, 4]).to be_ascending }
+it { expect([1, 4, 2, 3]).not_to be_ascending }
+```
+
+`be_descending`
+``` ruby
+it { expect([4, 3, 2, 1]).to be_descending }
+it { expect([1, 2, 3, 4]).not_to be_descending }
+```
+
+`be_boolean`
+``` ruby
+it { expect(true).to be_boolean }
+it { expect('true').not_to be_boolean }
+```
+
+`be_email`
+``` ruby
+it { expect('tiagopog@gmail.com').to be_email }
+it { expect('tiagopog@gmail').not_to be_email }
+```
+
+`be_url`
+``` ruby
+it { expect('http://adtangerine.com').to be_url }
+it { expect('adtangerine.com').not_to be_url }
+```
+
+`be_image_url`
+``` ruby
+it { expect('http://adtangerine.com/foobar.png').to be_image_url }
+it { expect('http://adtangerine.com/foobar.jpg').not_to be_image_url(:gif) }
+it { expect('http://adtangerine.com/foo/bar').not_to be_image_url }
+```
+
+`have_error_on`
+``` ruby
+subject(:user) { FactoryGirl.build(:user, email: nil) }
+
+it 'has an invalid email' do
+    user.valid?
+    expect(user).to have_error_on(:email)
+    expect(user).not_to have_error_on(:email)
+end
+```
+
+`have(x).items`
+``` ruby
+it { expect([1]).to have(1).item }
+it { expect(%w(foo bar)).to have(2).items }
+it { expect(%w(foo bar)).not_to have(1).item }
+```
+
+`have_at_least`
+``` ruby
+it { expect(%w(foo bar foobar)).to have_at_least(3).items }
+```
+
+`have_at_most`
+``` ruby
+it { expect(%w(foo bar foobar)).to have_at_most(3).items }
+```
+
+`include_items`
+``` ruby
+it { expect(%w(foo bar foobar)).to include_items(%w(foo bar foobar)) }
+```
+
 # TODO
 
-- Create macros to help testing model scopes;
-- Create macros to help testing Rails's controllers;
+- Create macros for model scopes;
+- Create macros for controllers and requests;
 - Add more matchers.
 
 ## Contributing
