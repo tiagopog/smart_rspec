@@ -14,7 +14,7 @@ Execute:
 
     $ bundle
 
-Require the gem in your "spec/rails_spec.rb":
+Require the gem in top of your `spec/rails_helper.rb` (or equivalent):
 ``` ruby 
 require 'smart_rspec'
 ```
@@ -31,7 +31,7 @@ end
 
 ### Macros
 
-In order to use SmartRspec's macros in your spec file you just need to define a valid "subject" of your cass/model.
+In order to use SmartRspec's macros in your spec file you just need to define a valid `subject`.
 
 #### has_attributes
 
@@ -49,12 +49,12 @@ end
 
 #### belongs_to, has_one, has_many
 
-It builds specs to test model associations for "belongs_to", "has_one" and "has_many".
+It builds specs to test model associations with `belongs_to`, `has_one` and `has_many`.
 ``` ruby
 RSpec.describe User, type: :model do
     subject { FactoryGirl.build(:user) }
     
-    belongs_to :system
+    belongs_to :business
     has_one :project
     has_many :tasks
 end
@@ -62,16 +62,43 @@ end
 
 #### fails_validation_of 
 
-It builds specs and forces a model validation to fail in the given attribute.
+It builds specs and forces a model validation to fail in the given attribute. This means that you will only turn its specs into green when you specify the corresponding validation in the model.
 
 ``` ruby
 RSpec.describe User, type: :model do
     subject { FactoryGirl.build(:user) }
     
     fails_validation_of :email, presence: true, email: true
-    fails_validation_of :name, length: { maximum: 80 }
+    fails_validation_of :name, length: { maximum: 80 }, uniqueness: true
+    fails_validation_of :username, length: { minimum: 10 }, exclusion: { in: %w(foo bar) }
+    # Other validations...
 end
 ```
+
+The approach that `fails_validation_of` uses is similar to that used by ActiveRecord's `validates` method. The `fails_validation_of` implements specs for the following validations:
+
+- `presence`
+- `email`
+- `length`
+- `exclusion`
+- `inclusion`
+- `uniqueness`
+- `format`
+
+In two cases (scoped uniqueness and format validations) it requires a valid mock to be passed so SmartRspec can use it to force the validation to fail properly:
+
+For scoped `:uniqueness`:
+``` ruby
+  other_user = FactoryGirl.build(:other_valid_user)
+  fails_validation_of :username, uniqueness: { scope: :name, mock: other_user }
+```
+
+For `:format`:
+``` ruby
+fails_validation_of :foo, format: { with: /foo/, mock: 'bar' }
+```
+
+### Matchers
 
 # TODO
 
