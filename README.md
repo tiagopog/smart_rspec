@@ -1,6 +1,6 @@
 # SmartRspec
 
-It's time to make your specs even more awesome! SmartRspec adds useful macros and matchers into the RSpec's suite so you can quickly define the specs for your Rails app.
+It's time to make your specs even more awesome! SmartRspec adds useful macros and matchers into the RSpec's test suite, this way you can quickly define specs for your Rails app and get focused on making things turn into green.
 
 ## Installation
 
@@ -14,12 +14,12 @@ Execute:
 
     $ bundle
 
-Require the gem in top of your `spec/rails_helper.rb` (or equivalent):
+Require the gem at the top of your `spec/rails_helper.rb` (or equivalent):
 ``` ruby 
 require 'smart_rspec'
 ```
 
-Then include SmartRspec:
+Then include the SmartRspec module:
 
 ``` ruby 
 RSpec.configure do |config|
@@ -48,11 +48,11 @@ end
 
 ### Macros
 
-In order to use SmartRspec's macros in your spec file you just need to define a valid `subject`.
+ To start using SmartRspec's macros in your spec file, you will just need to define a valid `subject`.
 
 #### has_attributes
 
-It builds specs for model attributes to test its type, enumerated values and defaults:
+It builds specs for model attributes and test its type, enumerated values and defaults:
 ``` ruby
 RSpec.describe User, type: :model do
     subject { FactoryGirl.build(:user) }
@@ -66,7 +66,7 @@ end
 
 #### belongs_to, has_one, has_many
 
-It builds specs to test model associations with `belongs_to`, `has_one` and `has_many`.
+It builds specs and test model associations like `belongs_to`, `has_one` and `has_many`.
 ``` ruby
 RSpec.describe User, type: :model do
     subject { FactoryGirl.build(:user) }
@@ -79,7 +79,7 @@ end
 
 #### fails_validation_of 
 
-It builds specs and forces a model validation to fail in the given attribute. This means that you will only turn its specs into green when you specify the corresponding validation in the model.
+It builds specs forcing model validations to fail, it means that you will only turn its specs into green when you specify the corresponding validation in the model.
 
 ``` ruby
 RSpec.describe User, type: :model do
@@ -102,7 +102,7 @@ The `fails_validation_of` implements specs for the following validations:
 - `uniqueness`
 - `format`
 
-In two cases (uniqueness with scope and format) it requires a valid mock to be passed so SmartRspec can use it to force the validation to fail properly.
+In two cases it will require a valid mock to be passed so SmartRspec can use it to force the validation to fail properly.
 
 For uniqueness with scope:
 ``` ruby
@@ -117,7 +117,7 @@ fails_validation_of :foo, format: { with: /foo/, mock: 'bar' }
 
 ### Matchers
 
-SmartRspec gathers a collection of custom matchers that might be useful in a lot of specs you face.
+SmartRspec gathers a collection of custom useful matchers.
 
 #### be_ascending
 
