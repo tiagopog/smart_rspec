@@ -29,6 +29,12 @@ end
 
 ## Usage
 
+* [Macros](#source-code-layout)
+    * [Comment Annotations](#comment-annotations)
+* [Comments](#comments)
+  * [Comment Annotations](#comment-annotations)
+* [Classes](#classes--modules)
+
 ### Macros
 
 In order to use SmartRspec's macros in your spec file you just need to define a valid `subject`.
@@ -85,15 +91,15 @@ The approach that `fails_validation_of` uses is similar to that used by ActiveRe
 - `uniqueness`
 - `format`
 
-In two cases (scoped uniqueness and format validations) it requires a valid mock to be passed so SmartRspec can use it to force the validation to fail properly:
+In two cases (uniqueness with scope and format) it requires a valid mock to be passed so SmartRspec can use it to force the validation to fail properly.
 
-For scoped `:uniqueness`:
+For uniqueness with scope:
 ``` ruby
   other_user = FactoryGirl.build(:other_valid_user)
   fails_validation_of :username, uniqueness: { scope: :name, mock: other_user }
 ```
 
-For `:format`:
+For format:
 ``` ruby
 fails_validation_of :foo, format: { with: /foo/, mock: 'bar' }
 ```
