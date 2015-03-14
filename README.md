@@ -29,11 +29,22 @@ end
 
 ## Usage
 
-* [Macros](#source-code-layout)
-    * [Comment Annotations](#comment-annotations)
-* [Comments](#comments)
-  * [Comment Annotations](#comment-annotations)
-* [Classes](#classes--modules)
+* [Macros](#macros)
+    * [has_attributes](#has_attributes)
+    * [belongs_to, has_one, has_many](#belongs_to-has_one-has_many)
+    * [fails_validation_of](#fails_validation_of)
+* [Matchers](#matchers)
+  * [be_ascending](#be_ascending)
+  * [be_descending](#be_descending)
+  * [be_boolean](#be_boolean)
+  * [be_email](#be_email)
+  * [be_url](#be_url)
+  * [be_image_url](#be_image_url)
+  * [have](#have)
+  * [have_at_least](#have_at_least)
+  * [have_at_most](#have_at_most)
+  * [have_error_on](#have_error_on)
+  * [include_items](#include_items)
 
 ### Macros
 
@@ -81,7 +92,7 @@ RSpec.describe User, type: :model do
 end
 ```
 
-The approach that `fails_validation_of` uses is similar to that used by ActiveRecord's `validates` method. The `fails_validation_of` implements specs for the following validations:
+The `fails_validation_of` implements specs for the following validations:
 
 - `presence`
 - `email`
@@ -108,44 +119,61 @@ fails_validation_of :foo, format: { with: /foo/, mock: 'bar' }
 
 SmartRspec gathers a collection of custom matchers that might be useful in a lot of specs you face.
 
-`be_ascending`
+#### be_ascending
+
 ``` ruby
 it { expect([1, 2, 3, 4]).to be_ascending }
 it { expect([1, 4, 2, 3]).not_to be_ascending }
 ```
 
-`be_descending`
+#### be_descending
 ``` ruby
 it { expect([4, 3, 2, 1]).to be_descending }
 it { expect([1, 2, 3, 4]).not_to be_descending }
 ```
 
-`be_boolean`
+#### be_boolean
 ``` ruby
 it { expect(true).to be_boolean }
 it { expect('true').not_to be_boolean }
 ```
 
-`be_email`
+#### be_email
 ``` ruby
 it { expect('tiagopog@gmail.com').to be_email }
 it { expect('tiagopog@gmail').not_to be_email }
 ```
 
-`be_url`
+#### be_url
 ``` ruby
 it { expect('http://adtangerine.com').to be_url }
 it { expect('adtangerine.com').not_to be_url }
 ```
 
-`be_image_url`
+#### be_image_url
 ``` ruby
 it { expect('http://adtangerine.com/foobar.png').to be_image_url }
 it { expect('http://adtangerine.com/foobar.jpg').not_to be_image_url(:gif) }
 it { expect('http://adtangerine.com/foo/bar').not_to be_image_url }
 ```
 
-`have_error_on`
+#### have(x).items
+``` ruby
+it { expect([1]).to have(1).item }
+it { expect(%w(foo bar)).to have(2).items }
+it { expect(%w(foo bar)).not_to have(1).item }
+```
+
+#### have_at_least
+``` ruby
+it { expect(%w(foo bar foobar)).to have_at_least(3).items }
+```
+
+#### have_at_most
+``` ruby
+it { expect(%w(foo bar foobar)).to have_at_most(3).items }
+```
+#### have_error_on
 ``` ruby
 subject(:user) { FactoryGirl.build(:user, email: nil) }
 
@@ -156,24 +184,7 @@ it 'has an invalid email' do
 end
 ```
 
-`have(x).items`
-``` ruby
-it { expect([1]).to have(1).item }
-it { expect(%w(foo bar)).to have(2).items }
-it { expect(%w(foo bar)).not_to have(1).item }
-```
-
-`have_at_least`
-``` ruby
-it { expect(%w(foo bar foobar)).to have_at_least(3).items }
-```
-
-`have_at_most`
-``` ruby
-it { expect(%w(foo bar foobar)).to have_at_most(3).items }
-```
-
-`include_items`
+#### include_items
 ``` ruby
 it { expect(%w(foo bar foobar)).to include_items(%w(foo bar foobar)) }
 ```
