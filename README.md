@@ -1,5 +1,7 @@
 # SmartRspec
 
+[![Build Status](https://travis-ci.org/tiagopog/smart_rspec.svg)](https://travis-ci.org/tiagopog/smart_rspec)
+
 It's time to make your specs even more awesome! SmartRspec adds useful macros and matchers into the RSpec's test suite, this way you can quickly define specs for your Rails app and get focused on making things turn into green.
 
 ## Installation
