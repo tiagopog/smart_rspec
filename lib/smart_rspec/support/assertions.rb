@@ -42,7 +42,7 @@ module SmartRspec
 
       def validates_length_of(attr, validation)
         validation.each do |key, value|
-          next unless %i(in is maximum minimum within).include?(key)
+          next unless [:in, :is, :maximum, :minimum, :within].include?(key)
           txt, n = build_length_validation(key, value)
           it txt do
             assert_validation(attr, 'x' * n)
@@ -114,7 +114,7 @@ module SmartRspec
       end
 
       def scoped_validation?(validation)
-        validation.is_a?(Hash) && (%i(scope mock) - validation.keys).empty?
+        validation.is_a?(Hash) && ([:scope, :mock] - validation.keys).empty?
       end
     end
   end
