@@ -36,7 +36,7 @@ module Factories
     end
 
     def locale=(locale)
-      %i(en pt).include?(locale) && @locale = locale
+      [:en, :pt].include?(locale) && @locale = locale
     end
 
     def valid?
@@ -59,7 +59,7 @@ module Factories
     end
 
     def check_locale
-      unless %i(en pt).include?(locale)
+      unless [:en, :pt].include?(locale)
         @errors.merge!({ locale: @@error_message[:inclusion] })
       end
     end
