@@ -8,7 +8,7 @@ module SmartRspec::Macros
   end
 
   def has_attributes(*attrs)
-    options = attrs.last.is_a?(Hash) && attrs.last.has_key?(:type) ? attrs.pop : nil
+    options = attrs.last.is_a?(Hash) && attrs.last.key?(:type) ? attrs.pop : nil
     assert_has_attributes(attrs, options)
   end
 

@@ -27,8 +27,8 @@ module SmartRspec
       match { |actual| actual.errors.keys.include?(attr) }
     end
 
-    matcher :include_items do |*items|
-      match { |actual| (items.flatten - [actual].flatten).empty? }
+    matcher :include_items do |items|
+      match { |actual| (items - actual).empty? }
     end
 
     matcher :be_ascending do
@@ -36,7 +36,7 @@ module SmartRspec
     end
 
     matcher :be_descending do
-      match { |actual| actual.each_cons(2).all? { |i, j| i >= j  } }
+      match { |actual| actual == actual.sort.reverse }
     end
   end
 end
