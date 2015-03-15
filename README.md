@@ -4,7 +4,7 @@
 [![Dependency Status](https://gemnasium.com/tiagopog/smart_rspec.svg)](https://gemnasium.com/tiagopog/smart_rspec)
 [![Gem Version](https://badge.fury.io/rb/smart_rspec.svg)](http://badge.fury.io/rb/smart_rspec)
 
-It's time to make your specs even more awesome! SmartRspec adds useful macros and matchers into the RSpec's test suite, this way you can quickly define specs for your Rails app and get focused on making things turn into green.
+It's time to make your specs even more awesome! SmartRspec adds useful macros and matchers into the RSpec's test suite, so you can quickly define specs for your Rails app and get focused on making things turn into green.
 
 ## Installation
 

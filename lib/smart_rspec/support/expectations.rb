@@ -1,7 +1,7 @@
 module SmartRspec
   module Support
     module Expectations
-      def assert_validation(attr, value = nil, mock = nil)
+      def validation_expectation(attr, value = nil, mock = nil)
         mock ||= subject
         mock.send("#{attr}=", value)
 
@@ -9,20 +9,30 @@ module SmartRspec
         expect(mock).to have_error_on(attr)
       end
 
-      def check_attr_options(attr, options)
-        options.each do |k, v|
-          if k == :default
-            expect(subject.send(attr)).to eq(v)
-          elsif k == :enum
-            expect(v).to include(subject.send(attr).to_sym)
-          elsif k == :type
-            assert_type =
-              if v != :Boolean
-                be_kind_of(Kernel.const_get(v))
-              else
-                be_boolean
-              end
-            expect(subject.send(attr)).to assert_type
+      def default_expectation(attr, value)
+        expect(subject.send(attr)).to eq(value)
+      end
+
+      def enum_expectation(attr, value)
+        expect(value).to include(subject.send(attr).to_sym)
+      end
+
+      def type_expectation(attr, value)
+        assert_type = value != :Boolean ? be_kind_of(Kernel.const_get(value)) : be_boolean
+        expect(subject.send(attr)).to assert_type
+      end
+
+      def has_attributes_expectation(attr, options) options.each do |key, value|
+          send("#{key}_expectation", attr, value)
+        end
+      end
+
+      def association_expectation(type, model)
+        if type == :has_many
+          expect(subject).to respond_to("#{model.to_s.singularize}_ids")
+        elsif type == :belongs_to
+          %W(#{model}= #{model}_id #{model}_id=).each do |method|
+            expect(subject).to respond_to(method)
           end
         end
       end
