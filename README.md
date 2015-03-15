@@ -1,6 +1,7 @@
 # SmartRspec
 
 [![Build Status](https://travis-ci.org/tiagopog/smart_rspec.svg)](https://travis-ci.org/tiagopog/smart_rspec)
+[![Code Climate](https://codeclimate.com/github/tiagopog/smart_rspec/badges/gpa.svg)](https://codeclimate.com/github/tiagopog/smart_rspec)
 [![Dependency Status](https://gemnasium.com/tiagopog/smart_rspec.svg)](https://gemnasium.com/tiagopog/smart_rspec)
 [![Gem Version](https://badge.fury.io/rb/smart_rspec.svg)](http://badge.fury.io/rb/smart_rspec)
 
