@@ -32,9 +32,7 @@ module SmartRspec
     end
 
     matcher :be_ascending do
-      match do |actual|
-        actual.each_cons(2).all? { |i, j| i <= j  }
-      end
+      match { |actual| actual == actual.sort  }
     end
 
     matcher :be_descending do

@@ -197,7 +197,7 @@ it { expect(%w(foo bar foobar)).to include_items(%w(foo bar foobar)) }
 # TODO
 
 - Create macros for model scopes;
-- Create macros for controllers and requests;
+- Create macros for controllers;
 - Add more matchers.
 
 ## Contributing
