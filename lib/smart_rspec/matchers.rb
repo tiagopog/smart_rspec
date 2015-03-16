@@ -32,11 +32,15 @@ module SmartRspec
     end
 
     matcher :be_ascending do
-      match { |actual| actual == actual.sort  }
+      match do |actual|
+        actual.each_cons(2).all? { |i, j| i <= j  }
+      end
     end
 
     matcher :be_descending do
-      match { |actual| actual == actual.sort.reverse }
+      match do |actual|
+        actual.each_cons(2).all? { |i, j| i >= j  }
+      end
     end
   end
 end
