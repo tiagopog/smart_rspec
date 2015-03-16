@@ -84,16 +84,18 @@ end
 
 #### fails_validation_of 
 
-It builds specs forcing model validations to fail, it means that you will only turn its specs into green when you specify the corresponding validation in the model.
+It builds specs forcing model validations to fail, it means that you will only turn its specs into green when you specify the corresponding validation in the model. In order to get a nice semantics it's recommended to use the `fails_validation_of` macro within a "when invalid" context like:
 
 ``` ruby
 RSpec.describe User, type: :model do
     subject { FactoryGirl.build(:user) }
     
-    fails_validation_of :email, presence: true, email: true
-    fails_validation_of :name, length: { maximum: 80 }, uniqueness: true
-    fails_validation_of :username, length: { minimum: 10 }, exclusion: { in: %w(foo bar) }
-    # Other validations...
+    context 'when invalid' do
+      fails_validation_of :email, presence: true, email: true
+      fails_validation_of :name, length: { maximum: 80 }, uniqueness: true
+      fails_validation_of :username, length: { minimum: 10 }, exclusion: { in: %w(foo bar) }
+      # Other validations...
+    end
 end
 ```
 
