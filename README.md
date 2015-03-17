@@ -84,7 +84,7 @@ end
 
 #### fails_validation_of 
 
-It builds specs forcing model validations to fail, it means that you will only turn its specs into green when you specify the corresponding validation in the model. In order to get a nice semantics it's recommended to use the `fails_validation_of` macro within a "when invalid" context like:
+It builds specs and forces model validations to fail, meaning that you will only turn specs into green when you specify the corresponding validation in the model. In order to get a nice semantics it's recommended to use the `fails_validation_of` macro within a "when invalid" context, like:
 
 ``` ruby
 RSpec.describe User, type: :model do
