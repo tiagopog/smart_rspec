@@ -20,13 +20,13 @@ Execute:
     $ bundle
 
 Require the gem at the top of your `spec/rails_helper.rb` (or equivalent):
-``` ruby 
+``` ruby
 require 'smart_rspec'
 ```
 
 Then include the SmartRspec module:
 
-``` ruby 
+``` ruby
 RSpec.configure do |config|
   config.include SmartRspec
 end
@@ -50,6 +50,7 @@ end
   * [have_at_most](#have_at_most)
   * [have_error_on](#have_error_on)
   * [include_items](#include_items)
+  * [be_a_list_of](#be_a_list_of)
 
 ### Macros
 
@@ -61,7 +62,7 @@ It builds specs for model attributes and test its type, enumerated values and de
 ``` ruby
 RSpec.describe User, type: :model do
     subject { FactoryGirl.build(:user) }
-    
+
     has_attributes :email, type: :String
     has_attributes :is_admin, type: :Boolean
     has_attributes :score, type: :Integer, default: 0
@@ -75,25 +76,27 @@ It builds specs and test model associations like `belongs_to`, `has_one` and `ha
 ``` ruby
 RSpec.describe User, type: :model do
     subject { FactoryGirl.build(:user) }
-    
+
     belongs_to :business
     has_one :project
     has_many :tasks
 end
 ```
 
-#### fails_validation_of 
+#### fails_validation_of
 
-It builds specs forcing model validations to fail, it means that you will only turn its specs into green when you specify the corresponding validation in the model.
+It builds specs and forces model validations to fail, meaning that you will only turn specs into green when you specify the corresponding validation in the model. In order to get a nice semantics it's recommended to use the `fails_validation_of` macro within a "when invalid" context, like:
 
 ``` ruby
 RSpec.describe User, type: :model do
     subject { FactoryGirl.build(:user) }
-    
-    fails_validation_of :email, presence: true, email: true
-    fails_validation_of :name, length: { maximum: 80 }, uniqueness: true
-    fails_validation_of :username, length: { minimum: 10 }, exclusion: { in: %w(foo bar) }
-    # Other validations...
+
+    context 'when invalid' do
+      fails_validation_of :email, presence: true, email: true
+      fails_validation_of :name, length: { maximum: 80 }, uniqueness: true
+      fails_validation_of :username, length: { minimum: 10 }, exclusion: { in: %w(foo bar) }
+      # Other validations...
+    end
 end
 ```
 
@@ -194,6 +197,11 @@ end
 it { expect(%w(foo bar foobar)).to include_items(%w(foo bar foobar)) }
 ```
 
+#### be_a_list_of
+``` ruby
+it { expect(Foo.fetch_api).to be_a_list_of(Foo)) }
+```
+
 # TODO
 
 - Create macros for model scopes;
@@ -209,4 +217,3 @@ it { expect(%w(foo bar foobar)).to include_items(%w(foo bar foobar)) }
 4. Commit your changes (`git commit -am 'Add some feature'`);
 5. Push to the branch (`git push origin my-new-feature`);
 6. Create new Pull Request.
-

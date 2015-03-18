@@ -40,6 +40,11 @@ module SmartRspec
         actual.each_cons(2).all? { |i, j| i >= j  }
       end
     end
+
+    matcher :be_a_list_of do |klass|
+      match do |collection|
+        collection.each.all? { |e| e.is_a?(klass) }
+      end
+    end
   end
 end
-
