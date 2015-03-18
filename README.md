@@ -182,14 +182,23 @@ it { expect(%w(foo bar foobar)).to have_at_least(3).items }
 ``` ruby
 it { expect(%w(foo bar foobar)).to have_at_most(3).items }
 ```
+
 #### have_error_on
 ``` ruby
-subject(:user) { FactoryGirl.build(:user, email: nil) }
+subject { User.new(email: nil, name: Faker::Name.name) }
 
-it 'has an invalid email' do
-    user.valid?
-    expect(user).to have_error_on(:email)
-    expect(user).not_to have_error_on(:email)
+context 'when valid' do
+  it do
+    subject.valid?
+    is_expected.to have_error_on(:email)
+  end
+end
+
+context 'when invalid' do
+  it do
+    subject.valid?
+    is_expected.not_to have_error_on(:name)
+  end
 end
 ```
 
@@ -221,7 +230,9 @@ end
 
 - Create macros for model scopes;
 - Create macros for controllers;
-- Add more matchers.
+- Add more matchers;
+- Fork matcher into submodules;
+- Turn the whole into "A"  in Code Climate.
 
 ## Contributing
 

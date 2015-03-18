@@ -111,21 +111,19 @@ describe 'SmartRspec Matchers' do
   end
 
   describe '#have_error_on' do
-    subject(:mock) { User.new(email: nil) }
+    subject { User.new(email: nil, name: Faker::Name.name) }
 
     context 'when valid' do
       it do
-        mock.valid?
-        expect(mock).to have_error_on(:email)
+        subject.valid?
+        is_expected.to have_error_on(:email)
       end
     end
 
     context 'when invalid' do
       it do
-        mock.email = Faker::Internet.email
-        mock.valid?
-
-        expect(mock).not_to have_error_on(:email)
+        subject.valid?
+        is_expected.not_to have_error_on(:name)
       end
     end
   end
