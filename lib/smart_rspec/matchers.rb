@@ -46,5 +46,11 @@ module SmartRspec
         collection.all? { |e| e.is_a?(klass) }
       end
     end
+
+    matcher :be_a_bad_request do
+      match do |response|
+        response.code.to_s =~ /^4/
+      end
+    end
   end
 end

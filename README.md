@@ -51,6 +51,7 @@ end
   * [have_error_on](#have_error_on)
   * [include_items](#include_items)
   * [be_a_list_of](#be_a_list_of)
+  * [be_a_bad_request](#be_a_bad_request)
 
 ### Macros
 
@@ -200,6 +201,20 @@ it { expect(%w(foo bar foobar)).to include_items(%w(foo bar foobar)) }
 #### be_a_list_of
 ``` ruby
 it { expect(Foo.fetch_api).to be_a_list_of(Foo)) }
+```
+
+#### be_a_bad_request
+``` ruby
+context 'unauthenticated' do
+  subject { get :profile }
+  it { is_expected.to be_a_bad_request }
+end
+
+context 'authenticated' do
+  before { sign_in user }
+  subject { get :profile }
+  it { is_expected.to_not be_a_bad_request }
+end
 ```
 
 # TODO
