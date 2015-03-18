@@ -148,7 +148,7 @@ describe 'SmartRspec Matchers' do
     end
 
     context 'when invalid' do
-      subject { Array.new(3, User.new) << String.new }
+      subject { Array.new(3, User.new) << nil }
       it { is_expected.to_not be_a_list_of(User) }
     end
   end
