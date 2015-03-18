@@ -152,4 +152,23 @@ describe 'SmartRspec Matchers' do
       it { is_expected.to_not be_a_list_of(User) }
     end
   end
+
+  describe '#be_a_bad_request' do
+    let(:response) { double('http response') }
+
+    context 'ok' do
+      before { allow(response).to receive(:code).and_return(200) }
+      it { expect(response).to_not be_a_bad_request }
+    end
+
+    context 'not found' do
+      before { allow(response).to receive(:code).and_return(404) }
+      it { expect(response).to be_a_bad_request }
+    end
+
+    context 'unauthorized' do
+      before { allow(response).to receive(:code).and_return(401) }
+      it { expect(response).to be_a_bad_request }
+    end
+  end
 end
