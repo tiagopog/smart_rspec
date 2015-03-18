@@ -187,18 +187,9 @@ it { expect(%w(foo bar foobar)).to have_at_most(3).items }
 ``` ruby
 subject { User.new(email: nil, name: Faker::Name.name) }
 
-context 'when valid' do
-  it do
-    subject.valid?
-    is_expected.to have_error_on(:email)
-  end
-end
-
-context 'when invalid' do
-  it do
-    subject.valid?
-    is_expected.not_to have_error_on(:name)
-  end
+it 'has an invalid email' do
+  subject.valid?
+  is_expected.to have_error_on(:email)
 end
 ```
 
@@ -232,7 +223,7 @@ end
 - Create macros for controllers;
 - Add more matchers;
 - Fork matcher into submodules;
-- Turn the whole into "A"  in Code Climate.
+- Turn the whole into "A" in Code Climate.
 
 ## Contributing
 
