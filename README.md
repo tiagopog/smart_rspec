@@ -222,7 +222,7 @@ end
 - Create macros for model scopes;
 - Create macros for controllers;
 - Add more matchers;
-- Fork matcher into submodules;
+- Take groups of matchers into modules;
 - Turn the whole into "A" in Code Climate.
 
 ## Contributing
