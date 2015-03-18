@@ -43,7 +43,7 @@ module SmartRspec
 
     matcher :be_a_list_of do |klass|
       match do |collection|
-        !collection.map { |object| object.is_a?(klass) }.include?(false)
+        collection.each.all? { |e| e.is_a?(klass) }
       end
     end
   end

@@ -143,12 +143,12 @@ describe 'SmartRspec Matchers' do
 
   describe '#be_a_list_of' do
     context 'when valid' do
-      subject { [User.new, User.new, User.new] }
+      subject { Array.new(3, User.new) }
       it { is_expected.to be_a_list_of(User) }
     end
 
     context 'when invalid' do
-      subject { [User.new, User.new, String.new] }
+      subject { Array.new(3, User.new) << String.new }
       it { is_expected.to_not be_a_list_of(User) }
     end
   end
