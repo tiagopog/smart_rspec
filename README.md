@@ -40,21 +40,21 @@ end
     * [belongs_to, has_one, has_many](#belongs_to-has_one-has_many)
     * [fails_validation_of](#fails_validation_of)
 * [Matchers](#matchers)
-  * ["Be" matchers](#)
-    * [be_ascending](#be_ascending)
-    * [be_a_bad_request](#be_a_bad_request)
-    * [be_a_list_of](#be_a_list_of)
+  * ["Be" matchers](#be-matchers)
     * [be_boolean](#be_boolean)
-    * [be_descending](#be_descending)
     * [be_email](#be_email)
-    * [be_image_url](#be_image_url)
     * [be_url](#be_url)
-  * ["Have" matchers](#)
+    * [be_image_url](#be_image_url)
+    * [be_a_list_of](#be_a_list_of)
+    * [be_ascending](#be_ascending)
+    * [be_descending](#be_descending)
+    * [be_a_bad_request](#be_a_bad_request)
+  * ["Have" matchers](#have-matchers)
     * [have](#have)
     * [have_at_least](#have_at_least)
     * [have_at_most](#have_at_most)
     * [have_error_on](#have_error_on)
-  * [Other matchers](#)
+  * [Other matchers](#other-matchers)
     * [include_items](#include_items)
 
 ### Macros
@@ -132,13 +132,49 @@ fails_validation_of :foo, format: { with: /foo/, mock: 'bar' }
 
 SmartRspec gathers a collection of custom useful matchers:
 
-#### "Be" matchers
+#### Be matchers
+
+##### be_boolean
+``` ruby
+it { expect(true).to be_boolean }
+it { expect('true').not_to be_boolean }
+```
+
+##### be_email
+``` ruby
+it { expect('tiagopog@gmail.com').to be_email }
+it { expect('tiagopog@gmail').not_to be_email }
+```
+
+##### be_url
+``` ruby
+it { expect('http://adtangerine.com').to be_url }
+it { expect('adtangerine.com').not_to be_url }
+```
+
+##### be_image_url
+``` ruby
+it { expect('http://adtangerine.com/foobar.png').to be_image_url }
+it { expect('http://adtangerine.com/foobar.jpg').not_to be_image_url(:gif) }
+it { expect('http://adtangerine.com/foo/bar').not_to be_image_url }
+```
+
+##### be_a_list_of
+``` ruby
+it { expect(Foo.fetch_api).to be_a_list_of(Foo)) }
+```
 
 ##### be_ascending
 
 ``` ruby
 it { expect([1, 2, 3, 4]).to be_ascending }
 it { expect([1, 4, 2, 3]).not_to be_ascending }
+```
+
+##### be_descending
+``` ruby
+it { expect([4, 3, 2, 1]).to be_descending }
+it { expect([1, 2, 3, 4]).not_to be_descending }
 ```
 
 ##### be_a_bad_request
@@ -155,43 +191,7 @@ context 'authenticated' do
 end
 ```
 
-##### be_a_list_of
-``` ruby
-it { expect(Foo.fetch_api).to be_a_list_of(Foo)) }
-```
-
-##### be_boolean
-``` ruby
-it { expect(true).to be_boolean }
-it { expect('true').not_to be_boolean }
-```
-
-##### be_descending
-``` ruby
-it { expect([4, 3, 2, 1]).to be_descending }
-it { expect([1, 2, 3, 4]).not_to be_descending }
-```
-
-##### be_email
-``` ruby
-it { expect('tiagopog@gmail.com').to be_email }
-it { expect('tiagopog@gmail').not_to be_email }
-```
-
-##### be_image_url
-``` ruby
-it { expect('http://adtangerine.com/foobar.png').to be_image_url }
-it { expect('http://adtangerine.com/foobar.jpg').not_to be_image_url(:gif) }
-it { expect('http://adtangerine.com/foo/bar').not_to be_image_url }
-```
-
-##### be_url
-``` ruby
-it { expect('http://adtangerine.com').to be_url }
-it { expect('adtangerine.com').not_to be_url }
-```
-
-#### "Have" matchers
+#### Have matchers
 
 ##### have(x).items
 ``` ruby
