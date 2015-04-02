@@ -61,7 +61,7 @@ describe SmartRspec::Macros do
     context 'when it receives a single arg' do
       user = User.new(email: Faker::Internet.email)
 
-      fails_validation_of :email, presence: true, email: true
+      fails_validation_of :email, presence: true, email: true, uniqueness: true
       fails_validation_of :name, length: { maximum: 80 }
       fails_validation_of :username, uniqueness: { scope: :name, mock: user }, exclusion: { in: %w(foo bar) }
       fails_validation_of :locale, inclusion: { in: %w(en pt) }

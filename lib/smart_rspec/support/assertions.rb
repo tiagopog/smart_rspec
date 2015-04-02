@@ -57,13 +57,16 @@ module SmartRspec
       end
 
       def validates_uniqueness_of(attr, validation)
-        scoped, scope =
-          scoped_validation?(validation),
-          validation.values_at(:scope).first
-
-        it "is already in use#{" (scope: #{scope})" if scoped}" do
-          mock = validation.values_at(:mock).first || subject.dup
-          scoped && mock.send("#{validation[:scope]}=", subject.send(validation[:scope]))
+        scoped = scoped_validation?(validation)
+        it "is already in use#{" (scope: #{validation[:scope]})" if scoped}" do
+          mock =
+            if scoped
+              copy = subject.send(validation[:scope])
+              validation[:mock].send("#{validation[:scope]}=", copy)
+              validation[:mock]
+            else
+              subject.dup
+            end
           validation_expectation(attr, subject.send(attr), mock)
         end
       end
