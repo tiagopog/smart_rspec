@@ -9,7 +9,10 @@ It's time to make your specs even more awesome! SmartRspec adds useful macros an
 
 ## Installation
 
-Compatible with Ruby 1.9+
+Compatible with:
+
+* Ruby 1.9+
+* ActiveRecord (model macros)
 
 Add this line to your application's Gemfile:
 

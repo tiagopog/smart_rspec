@@ -67,6 +67,7 @@ module SmartRspec
             else
               subject.dup
             end
+          subject.save unless subject.persisted?
           validation_expectation(attr, subject.send(attr), mock)
         end
       end

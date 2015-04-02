@@ -39,6 +39,8 @@ module Factories
       [:en, :pt].include?(locale) && @locale = locale
     end
 
+    def persisted?; true end
+
     def valid?
       %w(email father locale name username).each { |e| send("check_#{e}") }
       @errors.nil?
