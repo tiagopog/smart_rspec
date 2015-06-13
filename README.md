@@ -245,7 +245,7 @@ end
 # Credits
 
 1. Some of the "have" matchers (precisely `have`, `have_at_least` and `have_at_most`) were taken out from the `rspec-collection_matchers` gem.
-2. Some of the macro/matcher were inspired in the RSpec helpers that I work along with two friends ([Douglas André](https://github.com/douglasandre) and [Giovanni Bonetti](https://github.com/giovannibonetti)) in the
+2. Some of the macro/matcher were inspired in RSpec helpers that I worked along with two friends ([Douglas André](https://github.com/douglasandre) and [Giovanni Bonetti](https://github.com/giovannibonetti)) at the
 [Beauty Date](https://beautydate.com.br) project.
 
 # TODO
