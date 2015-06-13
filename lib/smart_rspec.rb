@@ -1,8 +1,8 @@
-%w(macros matchers support/expectations).each { |f| require "smart_rspec/#{f}" }
-
 require 'active_support/concern'
 require 'rspec/collection_matchers'
 require 'rspec/matchers'
+
+%w(macros matchers support/expectations).each { |f| require "smart_rspec/#{f}" }
 
 include SmartRspec::Matchers
 
