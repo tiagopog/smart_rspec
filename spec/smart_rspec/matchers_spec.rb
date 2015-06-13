@@ -131,6 +131,7 @@ describe 'SmartRspec Matchers' do
   describe '#include_items' do
     context 'when valid' do
       it { expect(%w(foo bar foobar)).to include_items(%w(foo bar foobar)) }
+      it { expect(%w(lorem ipsum)).to include_items('lorem', 'ipsum') }
       it { expect([1, 'foo', ['bar']]).to include_items([1, 'foo', ['bar']]) }
     end
 

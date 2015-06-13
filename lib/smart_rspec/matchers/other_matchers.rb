@@ -7,8 +7,8 @@ module SmartRspec
         match { |actual| actual.errors.keys.include?(attr) }
       end
 
-      matcher :include_items do |items|
-        match { |actual| (items - actual).empty? }
+      matcher :include_items do |*items|
+        match { |actual| (items.flatten(1) - actual).empty? }
       end
     end
   end
