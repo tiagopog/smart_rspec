@@ -4,7 +4,7 @@ module SmartRspec
       extend RSpec::Matchers::DSL
       include SmartRspec::Support::Controller::Response
 
-      matcher :have_valid_id_and_type_members do |expected|
+      matcher :have_primary_data do |expected|
         match do |response|
           json(response).collection.all? do |record|
             record['id'].present? && record['type'] == expected
@@ -20,17 +20,11 @@ module SmartRspec
         end
       end
 
-      matcher :have_relationship_members do |relationships|
+      matcher :have_relationships do |relationships|
         match do |response|
           json(response).collection.all? do |record|
             record['relationships'].keys.sort == relationships.sort
           end
-        end
-      end
-
-      matcher :have_meta_record_count do |count|
-        match do |response|
-          json(response).record_count == count
         end
       end
 
@@ -40,6 +34,12 @@ module SmartRspec
           return false if included_data.empty? || relationship_data.empty?
           included_data.size == relationship_data.size &&
             (included_data - relationship_data).empty?
+        end
+      end
+
+      matcher :have_meta_record_count do |count|
+        match do |response|
+          json(response).record_count == count
         end
       end
     end
