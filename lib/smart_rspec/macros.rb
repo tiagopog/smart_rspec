@@ -1,7 +1,7 @@
-require 'smart_rspec/support/assertions'
+require 'smart_rspec/support/model/assertions'
 
 module SmartRspec::Macros
-  include SmartRspec::Support::Assertions
+  include SmartRspec::Support::Model::Assertions
 
   def belongs_to(*associations)
     assert_association :belongs_to, associations
