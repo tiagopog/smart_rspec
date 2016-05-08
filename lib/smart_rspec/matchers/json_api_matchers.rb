@@ -33,6 +33,15 @@ module SmartRspec
           json(response).record_count == count
         end
       end
+
+      matcher :has_included_relationships do
+        match do |response|
+          json(response)
+          return false if included_data.empty? || relationship_data.empty?
+          included_data.size == relationship_data.size &&
+            (included_data - relationship_data).empty?
+        end
+      end
     end
   end
 end
