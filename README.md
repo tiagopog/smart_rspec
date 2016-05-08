@@ -51,7 +51,6 @@ end
     * [be_a_list_of](#be_a_list_of)
     * [be_ascending](#be_ascending)
     * [be_descending](#be_descending)
-    * [be_a_bad_request](#be_a_bad_request)
   * ["Have" matchers](#have-matchers)
     * [have](#have)
     * [have_at_least](#have_at_least)
@@ -178,20 +177,6 @@ it { expect([1, 4, 2, 3]).not_to be_ascending }
 ``` ruby
 it { expect([4, 3, 2, 1]).to be_descending }
 it { expect([1, 2, 3, 4]).not_to be_descending }
-```
-
-##### be_a_bad_request
-``` ruby
-context 'unauthenticated' do
-  subject { get :profile }
-  it { is_expected.to be_a_bad_request }
-end
-
-context 'authenticated' do
-  before { sign_in user }
-  subject { get :profile }
-  it { is_expected.to_not be_a_bad_request }
-end
 ```
 
 #### Have matchers

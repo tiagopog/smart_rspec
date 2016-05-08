@@ -7,12 +7,6 @@ module SmartRspec
         match { |actual| actual == actual.sort  }
       end
 
-      matcher :be_a_bad_request do
-        match do |response|
-          response.code.to_s =~ /^4/
-        end
-      end
-
       matcher :be_a_list_of do |klass|
         match do |collection|
           collection.all? { |e| e.is_a?(klass) }
