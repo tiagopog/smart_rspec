@@ -15,8 +15,22 @@ module SmartRspec
       matcher :has_fetchable_fields do |fields|
         match do |response|
           json(response).collection.all? do |record|
-            (record['attributes'].keys - fields).empty?
+            record['attributes'].keys.sort == fields.sort
           end
+        end
+      end
+
+      matcher :has_relationship_members do |relationships|
+        match do |response|
+          json(response).collection.all? do |record|
+            record['relationships'].keys.sort == relationships.sort
+          end
+        end
+      end
+
+      matcher :has_meta_record_count do |count|
+        match do |response|
+          json(response).record_count == count
         end
       end
     end
