@@ -11,6 +11,14 @@ module SmartRspec
           end
         end
       end
+
+      matcher :has_fetchable_fields do |fields|
+        match do |response|
+          json(response).collection.all? do |record|
+            (record['attributes'].keys - fields).empty?
+          end
+        end
+      end
     end
   end
 end
