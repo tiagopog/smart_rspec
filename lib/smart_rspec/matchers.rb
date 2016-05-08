@@ -12,4 +12,3 @@ module SmartRspec
     include SmartRspec::Matchers::OtherMatchers
   end
 end
-

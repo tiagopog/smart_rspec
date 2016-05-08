@@ -17,4 +17,3 @@ module SmartRspec
     include SmartRspec::Macros
   end
 end
-

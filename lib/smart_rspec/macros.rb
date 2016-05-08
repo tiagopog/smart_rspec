@@ -31,4 +31,3 @@ module SmartRspec::Macros
     end
   end
 end
-

@@ -13,4 +13,3 @@ module SmartRspec
     end
   end
 end
-
