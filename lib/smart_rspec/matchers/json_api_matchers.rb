@@ -12,7 +12,7 @@ module SmartRspec
         end
       end
 
-      matcher :have_fetchable_fields do |fields|
+      matcher :have_data_attributes do |fields|
         match do |response|
           json(response).collection.all? do |record|
             record['attributes'].keys.sort == fields.sort

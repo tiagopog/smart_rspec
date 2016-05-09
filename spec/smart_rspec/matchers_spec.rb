@@ -117,18 +117,18 @@ describe SmartRspec::Matchers do
       end
     end
 
-    describe '#have_fetchable_fields' do
+    describe '#have_data_attributes' do
       let(:fields) { %w(first_name last_name full_name birthday) }
 
       context 'positive assertion' do
         it do
-          expect(response).to have_fetchable_fields(fields)
+          expect(response).to have_data_attributes(fields)
         end
       end
 
       context 'negative assertion' do
         it do
-          expect(response).not_to have_fetchable_fields(fields + %w(foobar))
+          expect(response).not_to have_data_attributes(fields + %w(foobar))
         end
       end
     end
