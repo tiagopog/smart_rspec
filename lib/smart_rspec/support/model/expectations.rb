@@ -2,7 +2,7 @@ module SmartRspec
   module Support
     module Model
       module Expectations
-        def validation_expectation(attr, value = nil, mock = nil)
+        def be_valid_expectation(attr, value = nil, mock = nil)
           mock ||= subject
           mock.send("#{attr}=", value)
 

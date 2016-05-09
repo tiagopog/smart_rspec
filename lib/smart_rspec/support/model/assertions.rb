@@ -5,14 +5,14 @@ module SmartRspec
         def validates_email_of(attr, validation)
           it 'has an invalid format' do
             %w(foobar foobar@ @foobar foo@bar).each do |e|
-              validation_expectation(attr, e, subject.dup)
+              be_valid_expectation(attr, e, subject.dup)
             end
           end
         end
 
         def validates_exclusion_of(attr, validation)
           it 'has a reserved value' do
-            validation_expectation(attr, validation[:in].sample)
+            be_valid_expectation(attr, validation[:in].sample)
           end
         end
 
@@ -23,7 +23,7 @@ module SmartRspec
               validation.values_at(:with).first
 
             if mock && with && with !~ mock
-              validation_expectation(attr, mock)
+              be_valid_expectation(attr, mock)
             else
               raise ArgumentError, ':with and :mock are required when using the :format validation'
             end
@@ -35,7 +35,7 @@ module SmartRspec
             begin
               value = SecureRandom.hex
             end while validation[:in].include?(value)
-            validation_expectation(attr, value)
+            be_valid_expectation(attr, value)
           end
         end
 
@@ -44,14 +44,14 @@ module SmartRspec
             next unless [:in, :is, :maximum, :minimum, :within].include?(key)
             txt, n = build_length_validation(key, value)
             it txt do
-              validation_expectation(attr, 'x' * n)
+              be_valid_expectation(attr, 'x' * n)
             end
           end
         end
 
         def validates_presence_of(attr, validation)
           it 'is blank' do
-            validation_expectation(attr, nil, subject.dup)
+            be_valid_expectation(attr, nil, subject.dup)
           end
         end
 
@@ -62,7 +62,7 @@ module SmartRspec
             elsif subject.persisted? || subject.save
               mock, scope = validation.values_at(:mock, :scope)
               mock.send("#{scope}=", subject.send(scope)) unless scope.to_s.empty?
-              validation_expectation(attr, subject.send(attr), mock)
+              be_valid_expectation(attr, subject.send(attr), mock)
             end
           end
         end
