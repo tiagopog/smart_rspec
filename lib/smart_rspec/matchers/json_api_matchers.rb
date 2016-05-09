@@ -14,17 +14,13 @@ module SmartRspec
 
       matcher :have_data_attributes do |fields|
         match do |response|
-          json(response).collection.all? do |record|
-            record['attributes'].keys.sort == fields.sort
-          end
+          json(response).check_keys_in('attributes', fields)
         end
       end
 
       matcher :have_relationships do |relationships|
         match do |response|
-          json(response).collection.all? do |record|
-            record['relationships'].keys.sort == relationships.sort
-          end
+          json(response).check_keys_in('relationships', relationships)
         end
       end
 

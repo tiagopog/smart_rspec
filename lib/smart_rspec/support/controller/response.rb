@@ -35,6 +35,12 @@ module SmartRspec
             record.slice('type', 'id')
           end
         end
+
+        def check_keys_in(member, keys)
+          collection.all? do |record|
+            record[member].keys.sort == keys.sort
+          end
+        end
       end
     end
   end
