@@ -17,29 +17,41 @@ module Fixtures
 
     attr_accessor :email, :system, :system_id, :project, :project_id,
                   :name, :username, :is_admin, :score, :admin, :father,
-                  :mother, :articles, :rates
+                  :mother, :articles, :rates, :errors
 
-    attr_reader :id, :errors
+    attr_reader :id
+
+    attr_writer :locale
 
     def initialize(attrs = {})
       attrs.each { |key, value| self.send("#{key}=", value) }
       set_defaults
-      @@collection << self
     end
 
     class << self
       attr_reader :collection
+
+      def create(attrs)
+        user = User.new(attrs)
+        @@collection << user && user
+      end
+
+      def find_by(key, value)
+        @@collection.find { |e| e.send(key) == value }
+      end
+    end
+
+    def save
+      @@collection << self
     end
 
     def locale
       @locale.to_s unless @locale.nil?
     end
 
-    def locale=(locale)
-      [:en, :pt].include?(locale) && @locale = locale
+    def persisted?
+      User.find_by(:id, id)
     end
-
-    def persisted?; true end
 
     def valid?
       %w(email father locale name username).each { |e| send("check_#{e}") }
@@ -51,6 +63,8 @@ module Fixtures
     def check_email
       if !email || (email && email !~ build_regex(:email))
         @errors.merge!({ email: @@error_message[:blank] })
+      elsif User.find_by(:email, email)
+        @errors.merge!({ email: @@error_message[:uniqueness] })
       end
     end
 
@@ -61,7 +75,7 @@ module Fixtures
     end
 
     def check_locale
-      unless [:en, :pt].include?(locale)
+      unless %w(en pt).include?(locale)
         @errors.merge!({ locale: @@error_message[:inclusion] })
       end
     end
@@ -73,17 +87,19 @@ module Fixtures
     end
 
     def check_username
-      other_user = @@collection.select { |e| e.name == name && e.username == username && e.id != id }.first
-      if username && (other_user || %w(foo bar).include?(username))
-        @errors.merge!({ username: @@error_message[other_user ? :uniqueness : :exclusion] })
+      if username.to_s.empty?
+        @errors.merge!({ username: @@error_message[:blank] })
+      elsif %w(foo bar).include?(username)
+        @errors.merge!({ username: @@error_message[:exclusion] })
+      elsif User.find_by(:username, username)
+        @errors.merge!({ username: @@error_message[:uniqueness] })
       end
     end
 
     def set_defaults
       @@last_id = @id = @@last_id + 1
-      { errors: {}, is_admin: false, score: 0, locale: :en }.each do |key, value|
-        eval "@#{key} ||= #{value.inspect}"
-      end
+      attrs = { errors: {}, is_admin: false, score: 0, locale: :en }
+      attrs.each { |key, value| send("#{key}=", value) }
     end
   end
 end

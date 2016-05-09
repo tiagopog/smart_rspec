@@ -5,7 +5,7 @@ module SmartRspec
         def validates_email_of(attr, validation)
           it 'has an invalid format' do
             %w(foobar foobar@ @foobar foo@bar).each do |e|
-              validation_expectation(attr, e)
+              validation_expectation(attr, e, subject.dup)
             end
           end
         end
@@ -51,29 +51,23 @@ module SmartRspec
 
         def validates_presence_of(attr, validation)
           it 'is blank' do
-            validation_expectation(attr, nil)
+            validation_expectation(attr, nil, subject.dup)
           end
         end
 
         def validates_uniqueness_of(attr, validation)
-          scoped = scoped_validation?(validation)
-          it "is already in use#{" (scope: #{validation[:scope]})" if scoped}" do
-            mock =
-              if scoped
-                copy = subject.send(validation[:scope])
-                validation[:mock].send("#{validation[:scope]}=", copy)
-                validation[:mock]
-              else
-                subject.dup
-              end
-            subject.save unless subject.persisted?
-            validation_expectation(attr, subject.send(attr), mock)
+          it 'is already in use' do
+            if !validation.is_a?(Hash) || !validation.has_key?(:mock)
+              raise ArgumentError, 'A "mock" must be set when validating the uniqueness of a record'
+            elsif subject.persisted? || subject.save
+              mock, scope = validation.values_at(:mock, :scope)
+              mock.send("#{scope}=", subject.send(scope)) unless scope.to_s.empty?
+              validation_expectation(attr, subject.send(attr), mock)
+            end
           end
         end
 
-        def assert_has_attributes(attrs, options)
-          type_str = build_type_str(options)
-
+        def assert_has_attributes(attrs, options) type_str = build_type_str(options)
           attrs.each do |attr|
             it %Q(has an attribute named "#{attr}"#{type_str}) do
               expect(subject).to respond_to(attr)
@@ -109,9 +103,9 @@ module SmartRspec
           end
         end
 
-        def scoped_validation?(validation)
-          validation.is_a?(Hash) && ([:scope, :mock] - validation.keys).empty?
-        end
+        # def scoped_validation?(validation)
+        #   validation.is_a?(Hash) && ([:scope, :mock] - validation.keys).empty?
+        # end
       end
     end
   end

@@ -3,16 +3,13 @@ require 'spec_helper'
 describe SmartRspec::Macros do
   include SmartRspec
 
-  before(:all) do
-    attrs = {
-      email: Faker::Internet.email,
-      name: Faker::Name.name,
+  subject(:user) do
+    User.create({
+      email:    Faker::Internet.email,
+      name:     Faker::Name.name,
       username: Faker::Internet.user_name
-    }
-    @user = User.new(attrs)
+    })
   end
-
-  subject { @user }
 
   describe '#belongs_to' do
     context 'when it receives a single arg' do
@@ -59,11 +56,16 @@ describe SmartRspec::Macros do
 
   describe '#fails_validation_of' do
     context 'when it receives a single arg' do
-      user = User.new(email: Faker::Internet.email)
+      new_user =
+        User.new({
+          email:    Faker::Internet.email,
+          name:     Faker::Name.name,
+          username: Faker::Internet.user_name
+        })
 
-      fails_validation_of :email, presence: true, email: true, uniqueness: true
+      fails_validation_of :email, presence: true, email: true, uniqueness: { mock: new_user }
       fails_validation_of :name, length: { maximum: 80 }
-      fails_validation_of :username, uniqueness: { scope: :name, mock: user }, exclusion: { in: %w(foo bar) }
+      fails_validation_of :username, uniqueness: { mock: new_user }, exclusion: { in: %w(foo bar) }
       fails_validation_of :locale, inclusion: { in: %w(en pt) }
       fails_validation_of :father, format: { with: /foo/, mock: 'bar' }
     end
@@ -73,4 +75,3 @@ describe SmartRspec::Macros do
     end
   end
 end
-
