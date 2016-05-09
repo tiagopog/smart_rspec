@@ -2,7 +2,7 @@ require 'bundler/setup'
 require 'rubygems'
 require 'smart_rspec'
 require 'faker'
-require 'factories/user'
+require 'fixtures/user'
+require 'fixtures/response'
 
-include Factories
-
+include Fixtures

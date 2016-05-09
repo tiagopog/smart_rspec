@@ -1,6 +1,6 @@
 require 'smart_rspec/support/regexes'
 
-module Factories
+module Fixtures
   class User
     include SmartRspec::Support::Regexes
 
@@ -87,4 +87,3 @@ module Factories
     end
   end
 end
-

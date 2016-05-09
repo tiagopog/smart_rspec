@@ -1,0 +1,81 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "type": "users",
+      "links": {
+        "self": "http://api.myawesomesite.com/users/1"
+      },
+      "attributes": {
+        "first_name": "Tiago",
+        "last_name": "Guedes",
+        "full_name": "Tiago Guedes",
+        "birthday": "1988-22-12"
+      },
+      "relationships": {
+        "posts": {
+          "links": {
+            "self": "http://api.myawesomesite.com/users/1/relationships/posts",
+            "related": "http://api.myawesomesite.com/users/1/posts"
+          },
+          "data": [
+            {
+              "type": "posts",
+              "id": "1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "2",
+      "type": "users",
+      "links": {
+        "self": "http://api.myawesomesite.com/users/2"
+      },
+      "attributes": {
+        "first_name": "Douglas",
+        "last_name": "André",
+        "full_name": "Douglas André",
+        "birthday": null
+      },
+      "relationships": {
+        "posts": {
+          "links": {
+            "self": "http://api.myawesomesite.com/users/2/relationships/posts",
+            "related": "http://api.myawesomesite.com/users/2/posts"
+          },
+          "data": []
+        }
+      }
+    }
+  ],
+  "included": [
+    {
+      "id": "1",
+      "type": "posts",
+      "links": {
+        "self": "http://api.myawesomesite.com/posts/1"
+      },
+      "attributes": {
+        "title": "An awesome post",
+        "body": "Lorem ipsum dolot sit amet"
+      },
+      "relationships": {
+        "author": {
+          "links": {
+            "self": "http://api.myawesomesite.com/posts/1/relationships/author",
+            "related": "http://api.myawesomesite.com/posts/1/author"
+          }
+        }
+      }
+    }
+  ],
+  "meta": {
+    "record_count": 2
+  },
+  "links": {
+    "first": "http://api.myawesomesite.com/users?include=posts&page%5Blimit%5D=2&page%5Boffset%5D=0",
+    "last": "http://api.myawesomesite.com/users?include=posts&page%5Blimit%5D=2&page%5Boffset%5D=0"
+  }
+}

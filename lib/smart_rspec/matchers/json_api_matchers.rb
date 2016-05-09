@@ -7,7 +7,7 @@ module SmartRspec
       matcher :have_primary_data do |expected|
         match do |response|
           json(response).collection.all? do |record|
-            record['id'].present? && record['type'] == expected
+            !record['id'].to_s.empty? && record['type'] == expected
           end
         end
       end

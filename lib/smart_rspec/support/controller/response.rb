@@ -23,8 +23,8 @@ module SmartRspec
 
         def relationship_data
           @relationship_data ||= collection.flat_map do |record|
-            record['relationships'].map do |_, relation|
-              relation['data'].slice('type', 'id') if relation['data'].is_a?(Hash)
+            record['relationships'].flat_map do |_, relation|
+              [relation['data']].flatten.map { |data| data.slice('type', 'id') }
             end.compact
           end
         end
