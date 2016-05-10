@@ -35,7 +35,7 @@ module SmartRspec
 
       matcher :have_meta_record_count do |count|
         match do |response|
-          json(response).record_count == count
+          json(response).meta_record_count == count
         end
       end
     end

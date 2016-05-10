@@ -17,7 +17,7 @@ module SmartRspec
           @collection ||= [@json['data']].flatten
         end
 
-        def record_count
+        def meta_record_count
           @json['meta']['record_count']
         end
 
