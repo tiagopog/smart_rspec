@@ -1,4 +1,5 @@
 require 'json'
+require 'active_support'
 
 module SmartRspec
   module Support
