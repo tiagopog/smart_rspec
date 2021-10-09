@@ -21,7 +21,7 @@ Gem::Specification.new do |spec| spec.name          = 'smart_rspec'
   spec.add_runtime_dependency 'rspec-collection_matchers', '~> 1.1', '>= 1.1.2'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
-  spec.add_development_dependency 'faker', '~> 1.4'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'faker', '~> 2.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.5'
 end
